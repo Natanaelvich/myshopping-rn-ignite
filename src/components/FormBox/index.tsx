@@ -12,13 +12,12 @@ export function FormBox() {
 
   async function handleCreateProduct() {
     try {
-      const productRef = await firestore()
-        .collection("products")
-        .add({ description, quantiry, done: false });
-
-      const product = await productRef.get();
-
-      console.log(product.data());
+      await firestore().collection("products").add({
+        description,
+        quantiry,
+        done: false,
+        createdAt: firestore.FieldValue.serverTimestamp(),
+      });
     } catch (error: any) {
       console.log(error);
       Alert.alert(error.message);
