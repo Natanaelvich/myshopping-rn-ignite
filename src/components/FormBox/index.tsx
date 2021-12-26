@@ -8,13 +8,13 @@ import { Alert } from "react-native";
 
 export function FormBox() {
   const [description, setDescription] = useState("");
-  const [quantiry, setQuantiry] = useState(0);
+  const [quantity, setQuantity] = useState(0);
 
   async function handleCreateProduct() {
     try {
       await firestore().collection("products").add({
         description,
-        quantiry,
+        quantity,
         done: false,
         createdAt: firestore.FieldValue.serverTimestamp(),
       });
@@ -33,7 +33,7 @@ export function FormBox() {
       />
 
       <Input
-        onChangeText={(value) => setQuantiry(Number(value))}
+        onChangeText={(value) => setQuantity(Number(value))}
         placeholder="0"
         keyboardType="numeric"
         size="small"
