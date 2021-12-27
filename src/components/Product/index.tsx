@@ -23,6 +23,10 @@ export function Product({ data }: Props) {
     });
   }
 
+  async function handleDeleteProduct() {
+    await firestore().collection("products").doc(data.id).delete()
+  }
+
   return (
     <Container>
       <Info>
@@ -34,7 +38,7 @@ export function Product({ data }: Props) {
       <Options >
         <ButtonIcon onPress={handleToggleDoneProduct} icon={data.done ? "undo" : "check"} />
 
-        <ButtonIcon icon="delete" color="alert" />
+        <ButtonIcon onPress={handleDeleteProduct} icon="delete" color="alert" />
       </Options>
     </Container>
   );
