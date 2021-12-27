@@ -10,7 +10,7 @@ import { Container, Content, Progress, Transferred } from "./styles";
 
 export function Upload() {
   const [image, setImage] = useState("");
-  const [progressUploaded, setProgressUploaded] = useState(0);
+  const [progressUploaded, setProgressUploaded] = useState("0");
   const [bytesTransferred, setBytesTransferred] = useState(0);
   const [totalBytes, setTotalBytes] = useState(0);
 
@@ -36,22 +36,22 @@ export function Upload() {
   }
 
   function handleUploadImage() {
-    const reference = storage().ref("black-t-shirt-sm.png");
+    const nameRef = image.split("/ImagePicker/")[1];
+
+    const reference = storage().ref(nameRef);
 
     const task = reference.putFile(image);
 
     task.on("state_changed", (taskSnapshot) => {
-      const progress =
-        (taskSnapshot.bytesTransferred / taskSnapshot.totalBytes) * 100;
+      const progress = (
+        (taskSnapshot.bytesTransferred / taskSnapshot.totalBytes) *
+        100
+      ).toFixed(0);
 
-        setProgressUploaded(progress);
+      setProgressUploaded(progress);
 
       setBytesTransferred(taskSnapshot.bytesTransferred);
       setTotalBytes(taskSnapshot.totalBytes);
-
-      console.log(
-        `${taskSnapshot.bytesTransferred} transferred out of ${taskSnapshot.totalBytes}`
-      );
     });
 
     task.then(() => {
@@ -70,7 +70,9 @@ export function Upload() {
 
         <Progress>{progressUploaded}%</Progress>
 
-        <Transferred>{bytesTransferred} de {totalBytes} bytes transferido</Transferred>
+        <Transferred>
+          {bytesTransferred} de {totalBytes} bytes transferido
+        </Transferred>
       </Content>
     </Container>
   );
