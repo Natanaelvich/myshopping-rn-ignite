@@ -1,14 +1,35 @@
-import React from 'react';
-import { FlatList } from 'react-native';
+import React, { useCallback, useState } from "react";
+import storage from "@react-native-firebase/storage";
 
-import { Container, PhotoInfo } from './styles';
-import { Header } from '../../components/Header';
-import { Photo } from '../../components/Photo';
-import { File } from '../../components/File';
+import { useFocusEffect } from "@react-navigation/native";
 
-import { photosData } from '../../utils/photo.data';
+type PhotoData = {
+  id: string;
+  name: string;
+  path: string;
+};
 
 export function Receipts() {
+  const [photosData, setPhotosData] = useState<PhotoData[]>([]);
+
+  useFocusEffect(
+    useCallback(() => {
+      async function getPhotosData() {
+        const reference = storage().ref("images");
+
+        const result = await reference.list();
+
+        const _photosData = result.items.map((i) => ({
+          id: i.name,
+          name: i.name,
+          path: i.fullPath,
+        }));
+
+        setPhotosData(_photosData);
+      }
+      getPhotosData();
+    }, [])
+  );
   return (
     <Container>
       <Header title="Comprovantes" />
