@@ -38,7 +38,7 @@ export function Upload() {
   function handleUploadImage() {
     const nameRef = image.split("/ImagePicker/")[1];
 
-    const reference = storage().ref(nameRef);
+    const reference = storage().ref(`images/${nameRef}`);
 
     const task = reference.putFile(image);
 
@@ -61,7 +61,7 @@ export function Upload() {
 
   return (
     <Container>
-      <Header title="Lista de compras" />
+      <Header title="Upload de Fotos" />
 
       <Content>
         <Photo uri={image} onPress={handlePickImage} />
