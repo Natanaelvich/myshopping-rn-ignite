@@ -16,6 +16,8 @@ type PhotoData = {
 
 export function Receipts() {
   const [photosData, setPhotosData] = useState<PhotoData[]>([]);
+  const [photoShowUri, setPhotoShowUri] = useState("");
+  const [photoInfo, setPhotoInfo] = useState("");
 
   useFocusEffect(
     useCallback(() => {
@@ -45,28 +47,38 @@ export function Receipts() {
       oldPhotosData.filter((p) => p.id !== photo.id)
     );
   }
+
+  async function handleViewPhoto(photo: PhotoData) {
+    const reference = storage().ref(photo.path);
+
+    const uri = await reference.getDownloadURL();
+    const infos = await reference.getMetadata();
+
+    setPhotoInfo(`Ultima alteração em ${infos.updated}`);
+    setPhotoShowUri(uri);
+  }
+
   return (
     <Container>
       <Header title="Comprovantes" />
 
-      <Photo uri="" />
+      <Photo uri={photoShowUri} />
 
-      <PhotoInfo>
-        Informações da foto
-      </PhotoInfo>
+      <PhotoInfo>{photoInfo}</PhotoInfo>
 
       <FlatList
         data={photosData}
-        keyExtractor={item => item.name}
+        keyExtractor={(item) => item.name}
         renderItem={({ item }) => (
           <File
             data={item}
+            onShow={() => handleViewPhoto(item)}
             onDelete={() => handleDeletePhoto(item)}
           />
         )}
         contentContainerStyle={{ paddingBottom: 100 }}
         showsVerticalScrollIndicator={false}
-        style={{ width: '100%', padding: 24 }}
+        style={{ width: "100%", padding: 24 }}
       />
     </Container>
   );
