@@ -1,6 +1,11 @@
 import React, { useCallback, useState } from "react";
+import { FlatList } from "react-native";
 import storage from "@react-native-firebase/storage";
 
+import { Container, PhotoInfo } from "./styles";
+import { Header } from "../../components/Header";
+import { Photo } from "../../components/Photo";
+import { File } from "../../components/File";
 import { useFocusEffect } from "@react-navigation/native";
 
 type PhotoData = {
@@ -30,6 +35,16 @@ export function Receipts() {
       getPhotosData();
     }, [])
   );
+
+  async function handleDeletePhoto(photo: PhotoData) {
+    const reference = storage().ref(photo.path);
+
+    await reference.delete();
+
+    setPhotosData((oldPhotosData) =>
+      oldPhotosData.filter((p) => p.id !== photo.id)
+    );
+  }
   return (
     <Container>
       <Header title="Comprovantes" />
@@ -46,8 +61,7 @@ export function Receipts() {
         renderItem={({ item }) => (
           <File
             data={item}
-            onShow={() => { }}
-            onDelete={() => { }}
+            onDelete={() => handleDeletePhoto(item)}
           />
         )}
         contentContainerStyle={{ paddingBottom: 100 }}
