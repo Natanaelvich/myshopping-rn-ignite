@@ -14,7 +14,7 @@ export function SignIn() {
   async function handleCreateAccountUser() {
     try {
       await auth().createUserWithEmailAndPassword(email, password);
-    } catch (error) {
+    } catch (error: any) {
       if (error.code === "auth/email-already-in-use") {
         Alert.alert("E-mail ja está cadastrado!");
 
@@ -31,8 +31,15 @@ export function SignIn() {
         return;
       }
 
-      Alert.alert('Falha ao criar conta');
+      Alert.alert("Falha ao criar conta");
+    }
+  }
 
+  async function handleSignin() {
+    try {
+      await auth().signInWithEmailAndPassword(email, password);
+    } catch (error: any) {
+      Alert.alert("Falha ao realizar signin");
     }
   }
 
@@ -50,7 +57,7 @@ export function SignIn() {
         keyboardType="email-address"
       />
 
-      <Button title="Entrar" onPress={() => {}} />
+      <Button title="Entrar" onPress={handleSignin} />
 
       <Account>
         <ButtonText title="Recuperar senha" onPress={() => {}} />
