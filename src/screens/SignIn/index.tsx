@@ -43,24 +43,31 @@ export function SignIn() {
     }
   }
 
+  async function handleSendMailResetPassword() {
+    try {
+      await auth().sendPasswordResetEmail(email);
+      Alert.alert("E-mail enviado para redefinir senha");
+    } catch (error: any) {
+      Alert.alert("Falha ao enviar e-mail de redefinição de senha");
+    }
+  }
   return (
     <Container>
       <Title>MyShopping</Title>
       <Subtitle>monte sua lista de compra te ajudar nas compras</Subtitle>
 
-      <Input placeholder="e-mail" value={email} onChangeText={setEmail} />
+      <Input placeholder="e-mail" value={email} onChangeText={setEmail} keyboardType="email-address" />
 
       <Input
         placeholder="senha"
         value={password}
         onChangeText={setPassword}
-        keyboardType="email-address"
       />
 
       <Button title="Entrar" onPress={handleSignin} />
 
       <Account>
-        <ButtonText title="Recuperar senha" onPress={() => {}} />
+        <ButtonText title="Recuperar senha" onPress={handleSendMailResetPassword} />
         <ButtonText
           title="Criar minha conta"
           onPress={handleCreateAccountUser}
