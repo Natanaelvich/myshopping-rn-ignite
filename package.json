@@ -2,6 +2,7 @@
   "main": "index.js",
   "scripts": {
     "android": "expo run:android",
+    "android:release": "cd android/ && ./gradlew assembleRelease && echo android/app/build/outputs/apk/release/app-release.apk",
     "ios": "expo run:ios",
     "web": "expo start --web",
     "start": "react-native start"
