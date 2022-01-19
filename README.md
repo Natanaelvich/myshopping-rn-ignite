@@ -17,7 +17,7 @@ build your shopping list help you with shopping, mad with react native, expo, fi
 ## 🖼 GIFs
 
 <p align='center'>
-<img src='' />
+<img src='https://user-images.githubusercontent.com/52014318/150053239-11bc429a-ca7a-456c-9bf0-5c59b57e7c5f.gif' />
 </p>
 
 ## ✨ Technologies
