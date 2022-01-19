@@ -62,6 +62,7 @@ export function SignIn() {
         placeholder="senha"
         value={password}
         onChangeText={setPassword}
+        secureTextEntry
       />
 
       <Button title="Entrar" onPress={handleSignin} />
