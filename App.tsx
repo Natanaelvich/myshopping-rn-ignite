@@ -6,6 +6,7 @@ import { useFonts, Roboto_400Regular, Roboto_500Medium } from '@expo-google-font
 
 import { Routes } from './src/routes';
 import theme from './src/theme';
+import { AuthProvider } from './src/hooks/useAuth';
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -20,7 +21,9 @@ export default function App() {
   return (
     <ThemeProvider theme={theme}>
       <StatusBar style="auto" />
+      <AuthProvider>
       <Routes />
+      </AuthProvider>
     </ThemeProvider>
   );
 }
