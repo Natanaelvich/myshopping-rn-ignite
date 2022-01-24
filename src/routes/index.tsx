@@ -4,13 +4,15 @@ import auth from "@react-native-firebase/auth";
 
 import { AppRoutes } from "./app.routes";
 import { SignIn } from "../screens/SignIn";
+import { useAuth } from "../hooks/useAuth";
 
 export function Routes() {
+  const { user, changeUser } = useAuth();
+
   const [initializing, setInitializing] = useState(true);
-  const [user, setUser] = useState();
 
   function onAuthStateChanged(user: any) {
-    setUser(user);
+    changeUser(user);
     if (initializing) setInitializing(false);
   }
 
