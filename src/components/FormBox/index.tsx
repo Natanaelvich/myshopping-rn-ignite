@@ -5,8 +5,11 @@ import { Container } from "./styles";
 import { ButtonIcon } from "../ButtonIcon";
 import { Input } from "../Input";
 import { Alert } from "react-native";
+import { useAuth } from "../../hooks/useAuth";
 
 export function FormBox() {
+  const { user } = useAuth();
+
   const [description, setDescription] = useState("");
   const [quantity, setQuantity] = useState(0);
 
@@ -16,6 +19,7 @@ export function FormBox() {
         description,
         quantity,
         done: false,
+        userId: user?.uid,
         createdAt: firestore.FieldValue.serverTimestamp(),
       });
     } catch (error: any) {
