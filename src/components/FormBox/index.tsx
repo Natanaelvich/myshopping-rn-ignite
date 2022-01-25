@@ -19,7 +19,7 @@ export function FormBox() {
         description,
         quantity,
         done: false,
-        userId: user?.uid,
+        user: user?.uid,
         createdAt: firestore.FieldValue.serverTimestamp(),
       });
     } catch (error: any) {
