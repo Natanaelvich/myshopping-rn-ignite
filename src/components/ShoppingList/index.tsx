@@ -4,14 +4,18 @@ import firestore from "@react-native-firebase/firestore";
 
 import { styles } from "./styles";
 import { Product, ProductProps } from "../Product";
+import { useAuth } from "../../hooks/useAuth";
 
 
 export function ShoppingList() {
+    const {user} = useAuth()
+
   const [products, setProducts] = useState<ProductProps[]>([]);
 
   useEffect(() => {
     const subscriber = firestore()
       .collection("products")
+      .where("author", "==", user?.uid)
       .onSnapshot((documentSnapshot) => {
         setProducts(
           documentSnapshot.docs.map((d) => ({
