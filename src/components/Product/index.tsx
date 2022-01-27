@@ -3,6 +3,7 @@ import firestore from "@react-native-firebase/firestore";
 
 import { ButtonIcon } from "../ButtonIcon";
 import { Container, Info, Title, Quantity, Options } from "./styles";
+import { Alert } from "react-native";
 
 export type ProductProps = {
   id: string;
@@ -16,15 +17,23 @@ type Props = {
 };
 
 export function Product({ data }: Props) {
-
+    
   async function handleToggleDoneProduct() {
-    await firestore().collection("products").doc(data.id).update({
-      done: !data.done,
-    });
+    try {
+      await firestore().collection("products").doc(data.id).update({
+        done: !data.done,
+      });
+    } catch (error) {
+      Alert.alert(error.message);
+    }
   }
 
   async function handleDeleteProduct() {
-    await firestore().collection("products").doc(data.id).delete()
+    try {
+      await firestore().collection("products").doc(data.id).delete();
+    } catch (error) {
+      Alert.alert(error.message);
+    }
   }
 
   return (
@@ -35,8 +44,11 @@ export function Product({ data }: Props) {
         <Quantity>Quantidade: {data.quantity}</Quantity>
       </Info>
 
-      <Options >
-        <ButtonIcon onPress={handleToggleDoneProduct} icon={data.done ? "undo" : "check"} />
+      <Options>
+        <ButtonIcon
+          onPress={handleToggleDoneProduct}
+          icon={data.done ? "undo" : "check"}
+        />
 
         <ButtonIcon onPress={handleDeleteProduct} icon="delete" color="alert" />
       </Options>
