@@ -39,9 +39,21 @@ export function SignIn() {
     try {
       await auth().signInWithEmailAndPassword(email, password);
     } catch (error) {
+        console.log(error.code)
+      if (
+        error.code === "auth/wrong-password" ||
+        error.code === "auth/user-not-found"
+      ) {
+        Alert.alert("Usuário ou senha incorretos!");
+        return;
+      }
+      if (error.code === "auth/invalid-email") {
+        Alert.alert("E-mail inválido!");
+
+        return;
+      }
+
       Alert.alert("Falha ao realizar signin");
-
-
     }
   }
 
@@ -58,7 +70,12 @@ export function SignIn() {
       <Title>MyShopping</Title>
       <Subtitle>monte sua lista de compra te ajudar nas compras</Subtitle>
 
-      <Input placeholder="e-mail" value={email} onChangeText={setEmail} keyboardType="email-address" />
+      <Input
+        placeholder="e-mail"
+        value={email}
+        onChangeText={setEmail}
+        keyboardType="email-address"
+      />
 
       <Input
         placeholder="senha"
@@ -70,7 +87,10 @@ export function SignIn() {
       <Button title="Entrar" onPress={handleSignin} />
 
       <Account>
-        <ButtonText title="Recuperar senha" onPress={handleSendMailResetPassword} />
+        <ButtonText
+          title="Recuperar senha"
+          onPress={handleSendMailResetPassword}
+        />
         <ButtonText
           title="Criar minha conta"
           onPress={handleCreateAccountUser}
