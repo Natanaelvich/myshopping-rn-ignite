@@ -37,6 +37,11 @@ export function SignIn() {
 
   async function handleSignin() {
     try {
+      if (!email || !password) {
+        Alert.alert("Digite seu emal e senha!");
+        return;
+      }
+      
       await auth().signInWithEmailAndPassword(email, password);
     } catch (error) {
         console.log(error.code)
