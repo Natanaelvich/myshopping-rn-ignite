@@ -14,7 +14,7 @@ export function SignIn() {
   async function handleCreateAccountUser() {
     try {
       await auth().createUserWithEmailAndPassword(email, password);
-    } catch (error: any) {
+    } catch (error) {
       if (error.code === "auth/email-already-in-use") {
         Alert.alert("E-mail ja está cadastrado!");
 
@@ -38,8 +38,10 @@ export function SignIn() {
   async function handleSignin() {
     try {
       await auth().signInWithEmailAndPassword(email, password);
-    } catch (error: any) {
+    } catch (error) {
       Alert.alert("Falha ao realizar signin");
+
+
     }
   }
 
@@ -47,7 +49,7 @@ export function SignIn() {
     try {
       await auth().sendPasswordResetEmail(email);
       Alert.alert("E-mail enviado para redefinir senha");
-    } catch (error: any) {
+    } catch (error) {
       Alert.alert("Falha ao enviar e-mail de redefinição de senha");
     }
   }
