@@ -44,7 +44,6 @@ export function SignIn() {
       
       await auth().signInWithEmailAndPassword(email, password);
     } catch (error) {
-        console.log(error.code)
       if (
         error.code === "auth/wrong-password" ||
         error.code === "auth/user-not-found"
