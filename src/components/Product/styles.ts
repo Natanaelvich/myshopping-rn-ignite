@@ -1,10 +1,11 @@
+import Animated from 'react-native-reanimated';
 import styled from 'styled-components/native';
 
 type TitleProps = {
   done: boolean;
 }
 
-export const Container = styled.View`
+export const Container = styled(Animated.View)`
   background-color: ${({ theme }) => theme.COLORS.WHITE};
   width: 100%;
   height: 100px;

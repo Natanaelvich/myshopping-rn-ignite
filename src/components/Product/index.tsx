@@ -4,6 +4,11 @@ import firestore from "@react-native-firebase/firestore";
 import { ButtonIcon } from "../ButtonIcon";
 import { Container, Info, Title, Quantity, Options } from "./styles";
 import { Alert } from "react-native";
+import {
+  Layout,
+  LightSpeedInLeft,
+  LightSpeedOutRight,
+} from "react-native-reanimated";
 
 export type ProductProps = {
   id: string;
@@ -17,7 +22,6 @@ type Props = {
 };
 
 export function Product({ data }: Props) {
-    
   async function handleToggleDoneProduct() {
     try {
       await firestore().collection("products").doc(data.id).update({
@@ -37,7 +41,11 @@ export function Product({ data }: Props) {
   }
 
   return (
-    <Container>
+    <Container
+      entering={LightSpeedInLeft}
+      layout={Layout.springify()}
+      exiting={LightSpeedOutRight}
+    >
       <Info>
         <Title done={data.done}>{data.description}</Title>
 
