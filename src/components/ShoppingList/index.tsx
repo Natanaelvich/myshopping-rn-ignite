@@ -6,6 +6,7 @@ import { styles } from "./styles";
 import { Product, ProductProps } from "../Product";
 import { useAuth } from "../../hooks/useAuth";
 import { ContentSkeleton } from "../Skeleton";
+import { MotiView } from "moti";
 
 export function ShoppingList() {
   const { user } = useAuth();
@@ -45,6 +46,11 @@ export function ShoppingList() {
     return <ContentSkeleton />;
   }
   return (
+    <MotiView
+      from={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+    >
       <FlatList
         data={products}
         keyExtractor={(item) => item.id}
@@ -53,5 +59,6 @@ export function ShoppingList() {
         style={styles.list}
         contentContainerStyle={styles.content}
       />
+    </MotiView>
   );
 }
