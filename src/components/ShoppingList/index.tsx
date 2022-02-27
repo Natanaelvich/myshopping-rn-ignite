@@ -42,6 +42,24 @@ export function ShoppingList() {
     return () => subscriber();
   }, []);
 
+  async function handleToggleDoneProduct(data: { id: string; done: boolean }) {
+    try {
+      await firestore().collection("products").doc(data.id).update({
+        done: !data.done,
+      });
+    } catch (error) {
+      Alert.alert(error.message);
+    }
+  }
+
+  async function handleDeleteProduct(data: { id: string; done: boolean }) {
+    try {
+      await firestore().collection("products").doc(data.id).delete();
+    } catch (error) {
+      Alert.alert(error.message);
+    }
+  }
+
   if (loading) {
     return <ContentSkeleton />;
   }
@@ -54,7 +72,13 @@ export function ShoppingList() {
       <FlatList
         data={products}
         keyExtractor={(item) => item.id}
-        renderItem={({ item }) => <Product data={item} />}
+        renderItem={({ item }) => (
+          <Product
+            data={item}
+            handleToggleDoneProduct={() => handleToggleDoneProduct(item)}
+            handleDeleteProduct={() => handleDeleteProduct(item)}
+          />
+        )}
         showsVerticalScrollIndicator={false}
         style={styles.list}
         contentContainerStyle={styles.content}

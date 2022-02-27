@@ -19,31 +19,19 @@ export type ProductProps = {
 
 type Props = {
   data: ProductProps;
+  handleToggleDoneProduct: () => void;
+  handleDeleteProduct: () => void;
 };
 
-export function Product({ data }: Props) {
-  async function handleToggleDoneProduct() {
-    try {
-      await firestore().collection("products").doc(data.id).update({
-        done: !data.done,
-      });
-    } catch (error) {
-      Alert.alert(error.message);
-    }
-  }
-
-  async function handleDeleteProduct() {
-    try {
-      await firestore().collection("products").doc(data.id).delete();
-    } catch (error) {
-      Alert.alert(error.message);
-    }
-  }
-
+export function Product({
+  data,
+  handleDeleteProduct,
+  handleToggleDoneProduct,
+}: Props) {
   return (
     <Container
       entering={LightSpeedInLeft}
-      layout={Layout.springify()}
+      layout={Layout}
       exiting={LightSpeedOutRight}
     >
       <Info>
