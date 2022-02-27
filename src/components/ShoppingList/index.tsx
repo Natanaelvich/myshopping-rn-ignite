@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Alert, FlatList } from "react-native";
+import { Alert, ScrollView } from "react-native";
 import firestore from "@react-native-firebase/firestore";
 
 import { styles } from "./styles";
@@ -69,20 +69,16 @@ export function ShoppingList() {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
     >
-      <FlatList
-        data={products}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
+      <ScrollView contentContainerStyle={styles.list}>
+        {products.map((p) => (
           <Product
-            data={item}
-            handleToggleDoneProduct={() => handleToggleDoneProduct(item)}
-            handleDeleteProduct={() => handleDeleteProduct(item)}
+            key={p.id}
+            data={p}
+            handleToggleDoneProduct={() => handleToggleDoneProduct(p)}
+            handleDeleteProduct={() => handleDeleteProduct(p)}
           />
-        )}
-        showsVerticalScrollIndicator={false}
-        style={styles.list}
-        contentContainerStyle={styles.content}
-      />
+        ))}
+      </ScrollView>
     </MotiView>
   );
 }

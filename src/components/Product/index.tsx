@@ -31,7 +31,7 @@ export function Product({
   return (
     <Container
       entering={LightSpeedInLeft}
-      layout={Layout}
+      layout={Layout.springify()}
       exiting={LightSpeedOutRight}
     >
       <Info>
