@@ -1,24 +1,25 @@
-import React, { memo } from "react";
-import { Placeholder, PlaceholderLine, ShineOverlay } from "rn-placeholder";
-import { PlaceholderProps } from "rn-placeholder/lib/Placeholder";
+import React from "react";
+import { MotiView } from "moti";
+import { Skeleton } from "moti/skeleton";
 
-type Props = PlaceholderProps;
+const Spacer = ({ height = 16 }) => <MotiView style={{ height }} />;
 
-export const ContentSkeleton = memo(function (props: Props) {
+export const ContentSkeleton = () => {
   return (
-    <Placeholder
-      Animation={ShineOverlay}
-
-      style={[
-        {
-          padding: 24,
-        },
-        props.style,
-      ]}
+    <MotiView
+      transition={{
+        type: "timing",
+      }}
+      style={{
+        flex: 1,
+        paddingHorizontal : 24
+      }}
     >
-      <PlaceholderLine height={100} noMargin style={{marginBottom : 12, borderRadius : 5}} />
-      <PlaceholderLine height={100} noMargin style={{marginBottom : 12, borderRadius : 5}} />
-      <PlaceholderLine height={100} noMargin style={{marginBottom : 12, borderRadius : 5}} />
-    </Placeholder>
+      <Skeleton colorMode={"light"} width={"100%"} height={100} />
+      <Spacer height={16} />
+      <Skeleton colorMode={"light"} width={"100%"} height={100} />
+      <Spacer height={16} />
+      <Skeleton colorMode={"light"} width={"100%"} height={100}/>
+    </MotiView>
   );
-});
+};
