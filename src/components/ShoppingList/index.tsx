@@ -12,7 +12,7 @@ export function ShoppingList() {
   const { user } = useAuth();
 
   const [products, setProducts] = useState<ProductProps[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     setLoading(true);
