@@ -21,6 +21,7 @@ export function ShoppingList() {
     const subscriber = firestore()
       .collection("products")
       .where("author", "==", user?.uid)
+      .where("deleted","==", false)
       .onSnapshot(
         (documentSnapshot) => {
           setTimeout(() => {
@@ -57,9 +58,17 @@ export function ShoppingList() {
     }
   }
 
+  async function changeProductToNotDeleted(idProduct: string) {
+    await firestore().collection("products").doc(idProduct).update({
+      deleted: false,
+    });
+  }
+
   async function handleDeleteProduct(data: { id: string; done: boolean }) {
     try {
-      await firestore().collection("products").doc(data.id).delete();
+      await firestore().collection("products").doc(data.id).update({
+        deleted: true,
+      });
 
       Snackbar.show({
         text: "Deletado com sucesso",
@@ -67,7 +76,7 @@ export function ShoppingList() {
         action: {
           text: "DESFAZER",
           textColor: "green",
-          onPress: () => {},
+          onPress: () => changeProductToNotDeleted(data.id),
         },
       });
     } catch (error) {
