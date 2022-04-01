@@ -22,16 +22,20 @@ export function ShoppingList() {
       .where("author", "==", user?.uid)
       .onSnapshot(
         (documentSnapshot) => {
-          setProducts(
-            documentSnapshot.docs.map((d) => ({
-              id: d.id,
-              description: d.data().description,
-              quantity: d.data().quantity,
-              done: d.data().done,
-            }))
-          );
+          setTimeout(() => {
+            setProducts(
+              documentSnapshot.docs.map((d) => ({
+                id: d.id,
+                description: d.data().description,
+                quantity: d.data().quantity,
+                done: d.data().done,
+              }))
+            );
+          }, 700);
 
-          setLoading(false);
+          setTimeout(() => {
+            setLoading(false);
+          }, 500);
         },
         (error) => {
           setLoading(false);
