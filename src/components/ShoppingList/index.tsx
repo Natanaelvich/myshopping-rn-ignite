@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Alert, ScrollView } from "react-native";
 import firestore from "@react-native-firebase/firestore";
+import Snackbar from "react-native-snackbar";
+import { MotiView } from "moti";
 
 import { styles } from "./styles";
 import { Product, ProductProps } from "../Product";
 import { useAuth } from "../../hooks/useAuth";
 import { ContentSkeleton } from "../Skeleton";
-import { MotiView } from "moti";
 
 export function ShoppingList() {
   const { user } = useAuth();
@@ -59,6 +60,16 @@ export function ShoppingList() {
   async function handleDeleteProduct(data: { id: string; done: boolean }) {
     try {
       await firestore().collection("products").doc(data.id).delete();
+
+      Snackbar.show({
+        text: "Deletado com sucesso",
+        duration: Snackbar.LENGTH_SHORT,
+        action: {
+          text: "DESFAZER",
+          textColor: "green",
+          onPress: () => {},
+        },
+      });
     } catch (error) {
       Alert.alert(error.message);
     }
