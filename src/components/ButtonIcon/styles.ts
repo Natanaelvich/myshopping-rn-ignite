@@ -1,3 +1,4 @@
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import styled from 'styled-components/native';
 
 type Props = {
@@ -5,7 +6,7 @@ type Props = {
   size: 'small' | 'large';
 }
 
-export const Container = styled.TouchableOpacity<Props>`
+export const Container = styled(TouchableOpacity)<Props>`
   justify-content: center;
   align-items: center;
   border-radius: 5px;
