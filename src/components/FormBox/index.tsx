@@ -19,6 +19,7 @@ export function FormBox() {
         description,
         quantity,
         done: false,
+        deleted: false,
         author: user?.uid,
         createdAt: firestore.FieldValue.serverTimestamp(),
       });
