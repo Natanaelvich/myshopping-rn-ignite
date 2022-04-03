@@ -21,17 +21,27 @@ export function ShoppingList() {
     const subscriber = firestore()
       .collection("products")
       .where("author", "==", user?.uid)
-      .where("deleted","==", false)
       .onSnapshot(
         (documentSnapshot) => {
           setTimeout(() => {
             setProducts(
-              documentSnapshot.docs.map((d) => ({
-                id: d.id,
-                description: d.data().description,
-                quantity: d.data().quantity,
-                done: d.data().done,
-              }))
+              documentSnapshot.docs
+                .map((d) => ({
+                  id: d.id,
+                  description: d.data().description,
+                  quantity: d.data().quantity,
+                  done: d.data().done,
+                  deleted: d.data().deleted,
+                }))
+                .filter((d) => {
+                  if (d.deleted === undefined || d.deleted === false) {
+                    return true;
+                  }
+
+                  if (d.deleted) {
+                    return false;
+                  }
+                })
             );
           }, 700);
 
