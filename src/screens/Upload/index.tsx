@@ -27,7 +27,6 @@ export function Upload() {
           quality: 1,
         });
 
-        console.log(result);
         if (!result.cancelled) {
           PhotoEditor.Edit({
             path: result.uri.replace("file://", ""),
