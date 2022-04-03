@@ -8,6 +8,9 @@ buildscript {
         targetSdkVersion = 30
     }
     repositories {
+        // CONFIG REACT-NATIVE-PHOTO-EDITOR 
+        maven { url "https://jitpack.io" }
+
         google()
         mavenCentral()
         jcenter()
