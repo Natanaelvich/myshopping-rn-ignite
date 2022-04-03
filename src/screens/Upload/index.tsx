@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import * as ImagePicker from "expo-image-picker";
 import storage from "@react-native-firebase/storage";
+import PhotoEditor from "react-native-photo-editor";
 
 import { Button } from "../../components/Button";
 import { Header } from "../../components/Header";
@@ -26,8 +27,13 @@ export function Upload() {
           quality: 1,
         });
 
+        console.log(result);
         if (!result.cancelled) {
-          setImage(result.uri);
+          PhotoEditor.Edit({
+            path: result.uri.replace("file://", ""),
+
+            onDone: (res) => setImage(res),
+          });
         }
       }
     } catch (error) {
