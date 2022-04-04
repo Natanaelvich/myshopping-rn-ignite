@@ -1,4 +1,4 @@
-import styled from 'styled-components/native';
+import styled from "styled-components/native";
 
 export const Container = styled.View`
   width: 100%;
@@ -18,13 +18,27 @@ export const Info = styled.View`
   flex: 1;
 `;
 
+export const WrapperImage = styled.View`
+  width: 80px;
+  height: 80px;
+  border-radius: 12px;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const Image = styled.Image`
+  width: 100%;
+  height: 100%;
+`;
+
 export const Name = styled.Text`
-  font-size: 18px;
+  font-size: 14px;
   font-family: ${({ theme }) => theme.FONTS.MEDIUM};
+  max-width: 90%;
 `;
 
 export const Path = styled.Text`
-  font-size: 14px;
+  font-size: 12px;
   font-family: ${({ theme }) => theme.FONTS.REGULAR};
   color: ${({ theme }) => theme.COLORS.GRAY800};
 `;
