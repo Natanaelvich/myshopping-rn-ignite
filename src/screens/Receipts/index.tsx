@@ -2,13 +2,13 @@ import React, { useCallback, useState } from "react";
 import { FlatList } from "react-native";
 import storage from "@react-native-firebase/storage";
 
-import { Container, PhotoInfo } from "./styles";
+import { Container } from "./styles";
 import { Header } from "../../components/Header";
 import { Photo } from "../../components/Photo";
 import { File } from "../../components/File";
 import { useFocusEffect } from "@react-navigation/native";
 
-type PhotoData = {
+export type PhotoData = {
   id: string;
   name: string;
   path: string;
@@ -16,8 +16,6 @@ type PhotoData = {
 
 export function Receipts() {
   const [photosData, setPhotosData] = useState<PhotoData[]>([]);
-  const [photoShowUri, setPhotoShowUri] = useState("");
-  const [photoInfo, setPhotoInfo] = useState("");
 
   useFocusEffect(
     useCallback(() => {
@@ -50,21 +48,11 @@ export function Receipts() {
 
   async function handleViewPhoto(photo: PhotoData) {
     const reference = storage().ref(photo.path);
-
-    const uri = await reference.getDownloadURL();
-    const infos = await reference.getMetadata();
-
-    setPhotoInfo(`Ultima alteração em ${infos.updated}`);
-    setPhotoShowUri(uri);
   }
 
   return (
     <Container>
       <Header title="Comprovantes" />
-
-      <Photo uri={photoShowUri} />
-
-      <PhotoInfo>{photoInfo}</PhotoInfo>
 
       <FlatList
         data={photosData}
